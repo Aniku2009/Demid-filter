@@ -116,28 +116,38 @@
 //
 //
 //
-add =  (i) => {return i};
+add =  (i) => {return i+1};
 divide =  (i) => {return i/2};
 multip =  (i) => {return i*i};
 
-
-const compose  = (arr) =>{
-        let result = arr.reduce(function (prev, current, a) {
-        console.log('index - '+a);
-        if (a !== 0) {
-        arguments[0]=prev;}
-
-        console.log('prev - ' + prev);
-        console.log('current' + current);
-        let temp = current;
-        return temp;
-    }, 0);
-    return (i) =>{
-
-    }
-}
-
-const fnc = compose([add(i), divide(i), multip(i)]);
+const compose = (...fns) =>
+    fns.reduceRight((prevFn, nextFn) =>
+            (...args) => nextFn(prevFn(...args)),
+        value => value
+    );
+// const compose = (...fns) => (arg) =>
+//     fns.reduce((composed, f) => f(composed),arg);
+// const compose  = (...arr) =>
+//     arr.reduce((prevFn, nextFn) =>
+//             (...args) => nextFn(prevFn(...args)),
+//         value => value
+//     );
+// }const compose  = (...arr) =>{
+//        arr.reduce(function (prev, current) {
+//     });
+//     return (i) =>{
+//
+//     }
+// }
+// const fnc = compose(
+//     val => { console.log(1); return `<${add(val)}>`; },
+//     // val => { console.log(2); return `<${divide(val)}>`; },
+//     val => { console.log(3); return `<${multip(val)}>`; }
+// );
+const fnc = compose(multip, divide, add);
+// const fnc = compose(
+//     val => [add, divide, multip]);
+console.log( fnc(5) );
 // fnc = (i, j )  => {
 //
 //     let arr = [add(i, j), divide(i), multip(i)];
@@ -159,9 +169,15 @@ const fnc = compose([add(i), divide(i), multip(i)]);
 // }, 0);
 
 
-console.log( fnc(3) );
 
 
 
+// function checkAge(age) {
+//     let d = (age > 18) || confirm('Родители разрешили?');
+//    console.log(d);
+//     return d;
+// }
+//
+// checkAge(8);
 // let all = multip(divide(add(3,7)));
 // console.log( all );
